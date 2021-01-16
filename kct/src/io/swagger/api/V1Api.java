@@ -13,8 +13,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import io.swagger.model.ApiResponse403;
-import io.swagger.model.FavoriteEntity;
-import io.swagger.model.ModelApiResponse;
+import io.swagger.model.FavoriteRestEntity;
 
 import io.swagger.api.NotFoundException;
 
@@ -57,11 +56,11 @@ public class V1Api {
     @Produces({ "application/json" })
     @Operation(summary = "Přidá plemeno do oblíbených", description = "", tags = { "Oblíbená plemena" })
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(schema = @Schema(implementation = FavoriteEntity.class))),
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(schema = @Schema(implementation = FavoriteRestEntity.class))),
 
-            @ApiResponse(responseCode = "400", description = "Bad request. Není zadán povinný query parametr.", content = @Content(schema = @Schema(implementation = ModelApiResponse.class))) })
+            @ApiResponse(responseCode = "400", description = "Bad request. Není zadán povinný query parametr.", content = @Content(schema = @Schema(implementation = ApiResponse.class))) })
     public Response addFavorite(
-            @Parameter(in = ParameterIn.DEFAULT, description = "Přidávané plemeno", required = true) FavoriteEntity body
+            @Parameter(in = ParameterIn.DEFAULT, description = "Přidávané plemeno", required = true) FavoriteRestEntity body
 
             , @Context SecurityContext securityContext) throws NotFoundException {
         return delegate.addFavorite(body, securityContext);
@@ -89,9 +88,9 @@ public class V1Api {
     @Produces({ "application/json" })
     @Operation(summary = "Vrátí oblíbené plemeno podle ID.", description = "", tags = { "Oblíbená plemena" })
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = FavoriteEntity.class)))),
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = FavoriteRestEntity.class)))),
 
-            @ApiResponse(responseCode = "400", description = "Bad request. Není zadán povinný query parametr.", content = @Content(schema = @Schema(implementation = ModelApiResponse.class))) })
+            @ApiResponse(responseCode = "400", description = "Bad request. Není zadán povinný query parametr.", content = @Content(schema = @Schema(implementation = ApiResponse.class))) })
     public Response getFavoriteById(
             @Parameter(in = ParameterIn.PATH, description = "ID plemena", required = true) @PathParam("favoriteId") String favoriteId,
             @Context SecurityContext securityContext) throws NotFoundException {
@@ -104,9 +103,9 @@ public class V1Api {
     @Produces({ "application/json" })
     @Operation(summary = "Vrátí seznam všech oblíbených plemen.", description = "", tags = { "Oblíbená plemena" })
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = FavoriteEntity.class)))),
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = FavoriteRestEntity.class)))),
 
-            @ApiResponse(responseCode = "400", description = "Bad request. Není zadán povinný query parametr.", content = @Content(schema = @Schema(implementation = ModelApiResponse.class))) })
+            @ApiResponse(responseCode = "400", description = "Bad request. Není zadán povinný query parametr.", content = @Content(schema = @Schema(implementation = ApiResponse.class))) })
     public Response getFavorites(@Context SecurityContext securityContext) throws NotFoundException {
         return delegate.getFavorites(securityContext);
     }

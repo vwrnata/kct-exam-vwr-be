@@ -14,16 +14,16 @@ package io.swagger.model;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
+
+import cz.kct.exam.db.favorites.FavoriteEntity;
+
 import io.swagger.v3.oas.annotations.media.Schema;
-import javax.validation.constraints.*;
-import javax.validation.Valid;
 
 /**
  * FavoriteEntity
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJerseyServerCodegen", date = "2021-01-16T08:00:40.804Z[GMT]")
-public class FavoriteEntity {
+public class FavoriteRestEntity {
     @JsonProperty("id")
     private String id = null;
 
@@ -45,7 +45,29 @@ public class FavoriteEntity {
     @JsonProperty("url")
     private String url = null;
 
-    public FavoriteEntity id(String id) {
+    /**
+     * Default konstruktor
+     */
+    public FavoriteRestEntity() {
+        super();
+    }
+
+    /**
+     * Konstructor pro prevod DB Entity na REST entitu
+     * 
+     * @param ent DB Entita
+     */
+    public FavoriteRestEntity(FavoriteEntity ent) {
+        this.id = ent.getFavoriteId();
+        this.name = ent.getName();
+        this.description = ent.getDescription();
+        this.origin = ent.getOrigin();
+        this.width = ent.getImageWidth();
+        this.height = ent.getImageHeight();
+        this.url = ent.getImageUrl();
+    }
+
+    public FavoriteRestEntity id(String id) {
         this.id = id;
         return this;
     }
@@ -65,7 +87,7 @@ public class FavoriteEntity {
         this.id = id;
     }
 
-    public FavoriteEntity name(String name) {
+    public FavoriteRestEntity name(String name) {
         this.name = name;
         return this;
     }
@@ -85,7 +107,7 @@ public class FavoriteEntity {
         this.name = name;
     }
 
-    public FavoriteEntity description(String description) {
+    public FavoriteRestEntity description(String description) {
         this.description = description;
         return this;
     }
@@ -105,7 +127,7 @@ public class FavoriteEntity {
         this.description = description;
     }
 
-    public FavoriteEntity origin(String origin) {
+    public FavoriteRestEntity origin(String origin) {
         this.origin = origin;
         return this;
     }
@@ -125,7 +147,7 @@ public class FavoriteEntity {
         this.origin = origin;
     }
 
-    public FavoriteEntity width(Integer width) {
+    public FavoriteRestEntity width(Integer width) {
         this.width = width;
         return this;
     }
@@ -145,7 +167,7 @@ public class FavoriteEntity {
         this.width = width;
     }
 
-    public FavoriteEntity height(Integer height) {
+    public FavoriteRestEntity height(Integer height) {
         this.height = height;
         return this;
     }
@@ -165,7 +187,7 @@ public class FavoriteEntity {
         this.height = height;
     }
 
-    public FavoriteEntity url(String url) {
+    public FavoriteRestEntity url(String url) {
         this.url = url;
         return this;
     }
@@ -193,7 +215,7 @@ public class FavoriteEntity {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        FavoriteEntity favoriteEntity = (FavoriteEntity) o;
+        FavoriteRestEntity favoriteEntity = (FavoriteRestEntity) o;
         return Objects.equals(this.id, favoriteEntity.id) && Objects.equals(this.name, favoriteEntity.name)
                 && Objects.equals(this.description, favoriteEntity.description)
                 && Objects.equals(this.origin, favoriteEntity.origin)

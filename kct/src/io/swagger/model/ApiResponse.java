@@ -14,25 +14,31 @@ package io.swagger.model;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.v3.oas.annotations.media.Schema;
-import javax.validation.constraints.*;
-import javax.validation.Valid;
 
 /**
  * ModelApiResponse
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJerseyServerCodegen", date = "2021-01-16T08:00:40.804Z[GMT]")
-public class ModelApiResponse {
+public class ApiResponse {
     @JsonProperty("status")
     private String status = null;
 
     @JsonProperty("message")
     private String message = null;
 
-    public ModelApiResponse status(String status) {
+    public ApiResponse status(String status) {
         this.status = status;
         return this;
+    }
+
+    /**
+     * @param status
+     * @param message
+     */
+    public ApiResponse(String status, String message) {
+        this.status = status;
+        this.message = message;
     }
 
     /**
@@ -50,7 +56,7 @@ public class ModelApiResponse {
         this.status = status;
     }
 
-    public ModelApiResponse message(String message) {
+    public ApiResponse message(String message) {
         this.message = message;
         return this;
     }
@@ -78,7 +84,7 @@ public class ModelApiResponse {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        ModelApiResponse _apiResponse = (ModelApiResponse) o;
+        ApiResponse _apiResponse = (ApiResponse) o;
         return Objects.equals(this.status, _apiResponse.status) && Objects.equals(this.message, _apiResponse.message);
     }
 
