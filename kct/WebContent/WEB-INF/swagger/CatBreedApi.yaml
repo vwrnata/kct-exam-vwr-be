@@ -1,0 +1,167 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Cat Breed Api
+  description: API pro ukladani oblíbených plemen koček
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/vojtaw/CatBreedApi/1.0.0
+    
+paths: 
+  '/v1/favorites/':
+    get:
+      tags:
+      - Oblíbená plemena
+      summary: 'Vrátí seznam všech oblíbených plemen.'
+      operationId: getFavorites
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FavoriteEntity'
+        400:
+          description: 'Bad request. Není zadán povinný query parametr.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    post:
+      tags:
+      - Oblíbená plemena
+      summary: 'Přidá plemeno do oblíbených'
+      operationId: addFavorite
+      requestBody:
+        description: 'Přidávané plemeno'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FavoriteEntity'
+        required: true
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FavoriteEntity'
+        400:
+          description: 'Bad request. Není zadán povinný query parametr.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+  '/v1/favorites/{favoriteId}':
+    get:
+      tags:
+      - Oblíbená plemena
+      summary: 'Vrátí oblíbené plemeno podle ID.'
+      operationId: getFavoriteById
+      parameters:
+      - name: favoriteId
+        in: path
+        description: 'ID plemena'
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FavoriteEntity'
+        400:
+          description: 'Bad request. Není zadán povinný query parametr.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    delete:
+      tags:
+      - Oblíbená plemena
+      summary: 'Smaže plemeno ze seznamu oblíbených plemen.'
+      operationId: deleteFavorite
+      parameters:
+      - name: favoriteId
+        in: path
+        description: 'ID plemena'
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: 'Successful operation'
+        400:
+          description: 'Bad request. Není zadán povinný query parametr.'
+        403:
+          description: 'Forbidden. Záznam není smazatelný.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse403'
+components:
+  schemas:
+    FavoriteEntity:
+      type: object
+      properties:
+        id:
+          description: 'ID plemena (breed)'
+          type: string
+          example: 'raga'
+        name:
+          description: 'Název plemena'
+          type: string
+          example: 'Ragamuffin'
+        description:
+          description: 'Popis plemena'
+          type: string
+          example: 'The Ragamuffin is calm, even tempered and gets along well with all family members. Changes in routine generally do not upset her. She is an ideal companion for those in apartments, and with children due to her patient nature.'
+        origin:
+          description: 'Země původu'
+          type: string
+          example: 'United States'
+        width:
+          description: 'Šířka obrázku'
+          type: integer
+          format: int32
+          example: 800
+        height:
+          description: 'Výška obrázku'
+          type: integer
+          format: int32
+          example: 600
+        url:
+          description: 'URL obrázku'
+          type: string
+          format: string
+          example: 'https://cdn2.thecatapi.com/images/wwFp9IiRd.jpg'
+      xml:
+        name: FavoriteEntity
+    ApiResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: 'Textová reprezentace HTML status kódu'
+          example: "400"
+        message:
+          type: string
+          description: 'Chybová hláška, nebo prázdný řetězec, když OK.'
+          example: 'Id field is required'
+    ApiResponse403:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Textová reprezentace HTML status kódu
+          example: "FORBIDDEN"
+        message:
+          type: string
+          example: entity is not deletable

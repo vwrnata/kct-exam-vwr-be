@@ -1,0 +1,15 @@
+.apt_generated
+.settings
+.websettings
+.runtime
+.compatibility
+.classpath
+.factorypath
+.website-config
+.project
+.j2ee
+.tern-project
+/target/
+target
+target/
+WebContent\WEB-INF\classes\
