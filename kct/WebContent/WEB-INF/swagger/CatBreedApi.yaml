@@ -23,7 +23,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FavoriteEntity'
+                  $ref: '#/components/schemas/FavoriteRestEntity'
         400:
           description: 'Bad request. Není zadán povinný query parametr.'
           content:
@@ -40,7 +40,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/FavoriteEntity'
+              $ref: '#/components/schemas/FavoriteRestEntity'
         required: true
       responses:
         200:
@@ -48,7 +48,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FavoriteEntity'
+                $ref: '#/components/schemas/FavoriteRestEntity'
         400:
           description: 'Bad request. Není zadán povinný query parametr.'
           content:
@@ -76,7 +76,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FavoriteEntity'
+                  $ref: '#/components/schemas/FavoriteRestEntity'
         400:
           description: 'Bad request. Není zadán povinný query parametr.'
           content:
@@ -108,7 +108,7 @@ paths:
                 $ref: '#/components/schemas/ApiResponse403'
 components:
   schemas:
-    FavoriteEntity:
+    FavoriteRestEntity:
       type: object
       properties:
         id:
@@ -143,7 +143,7 @@ components:
           format: string
           example: 'https://cdn2.thecatapi.com/images/wwFp9IiRd.jpg'
       xml:
-        name: FavoriteEntity
+        name: FavoriteRestEntity
     ApiResponse:
       type: object
       properties:
