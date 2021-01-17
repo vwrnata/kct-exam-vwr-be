@@ -1,5 +1,6 @@
 package io.swagger.api;
 
+import io.swagger.model.*;
 import io.swagger.api.V1ApiService;
 import io.swagger.api.factories.V1ApiServiceFactory;
 
@@ -25,7 +26,7 @@ import javax.ws.rs.*;
 
 @Path("/v1")
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJerseyServerCodegen", date = "2021-01-16T08:00:40.804Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaJerseyServerCodegen", date = "2021-01-17T07:02:49.531Z[GMT]")
 public class V1Api {
     private final V1ApiService delegate;
 
@@ -108,5 +109,33 @@ public class V1Api {
             @ApiResponse(responseCode = "400", description = "Bad request. Není zadán povinný query parametr.", content = @Content(schema = @Schema(implementation = ApiResponse.class))) })
     public Response getFavorites(@Context SecurityContext securityContext) throws NotFoundException {
         return delegate.getFavorites(securityContext);
+    }
+
+    @OPTIONS
+    @Path("/favorites/{favoriteId}")
+
+    @Produces({ "application/json" })
+    @Operation(summary = "", description = "", tags = { "Oblíbená plemena" })
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(schema = @Schema(implementation = ApiResponse.class))),
+
+            @ApiResponse(responseCode = "400", description = "Bad request. Není zadán povinný query parametr.", content = @Content(schema = @Schema(implementation = ApiResponse.class))) })
+    public Response v1FavoritesFavoriteIdOptions(
+            @Parameter(in = ParameterIn.PATH, description = "ID plemena", required = true) @PathParam("favoriteId") String favoriteId,
+            @Context SecurityContext securityContext) throws NotFoundException {
+        return delegate.v1FavoritesFavoriteIdOptions(favoriteId, securityContext);
+    }
+
+    @OPTIONS
+    @Path("/favorites/")
+
+    @Produces({ "application/json" })
+    @Operation(summary = "", description = "", tags = { "Oblíbená plemena" })
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(schema = @Schema(implementation = ApiResponse.class))),
+
+            @ApiResponse(responseCode = "400", description = "Bad request. Není zadán povinný query parametr.", content = @Content(schema = @Schema(implementation = ApiResponse.class))) })
+    public Response v1FavoritesOptions(@Context SecurityContext securityContext) throws NotFoundException {
+        return delegate.v1FavoritesOptions(securityContext);
     }
 }

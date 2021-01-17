@@ -55,6 +55,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponse'
+    options:
+      tags:
+      - Oblíbená plemena
+      description: 'CORS hack'
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        400:
+          description: 'Bad request. Není zadán povinný query parametr.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
   '/v1/favorites/{favoriteId}':
     get:
       tags:
@@ -106,6 +123,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponse403'
+    options:
+      tags:
+      - Oblíbená plemena
+      description: 'CORS hack'
+      parameters:
+      - name: favoriteId
+        in: path
+        description: 'ID plemena'
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        400:
+          description: 'Bad request. Není zadán povinný query parametr.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
 components:
   schemas:
     FavoriteRestEntity:

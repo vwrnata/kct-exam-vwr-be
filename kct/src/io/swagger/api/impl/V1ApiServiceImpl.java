@@ -32,4 +32,14 @@ public class V1ApiServiceImpl extends V1ApiService {
     public Response getFavorites(SecurityContext securityContext) throws NotFoundException {
         return new FavoritesIml().getFavorites(securityContext);
     }
+    
+    @Override
+    public Response v1FavoritesFavoriteIdOptions(String favoriteId, SecurityContext securityContext) throws NotFoundException {
+        return new FavoritesIml().sendOption(securityContext);
+    }
+    
+    @Override
+    public Response v1FavoritesOptions(SecurityContext securityContext) throws NotFoundException {
+        return new FavoritesIml().sendOption(securityContext);
+    }
 }

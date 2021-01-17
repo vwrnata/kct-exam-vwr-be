@@ -23,7 +23,7 @@ public class FavoritesIml {
 
     /**
      * Nacte z DB Oblibena plemena, prevede na REST a vrati jako REST Response
-     *  
+     * 
      * @param securityContext
      * 
      * @return Response REST Response
@@ -42,8 +42,9 @@ public class FavoritesIml {
                 restFavorites.add(new FavoriteRestEntity(favoriteEntity));
             }
             if (!restFavorites.isEmpty()) {
-                return Response.status(responseStatus).encoding("UTF-8").header("Content-type", "application/json")
-                        .entity(restFavorites).build();
+                return Response.status(responseStatus).encoding("UTF-8")
+//                        .header("Access-Control-Allow-Origin", "http://localhost:8080")
+                        .header("Access-Control-Allow-Origin", "*").entity(restFavorites).build();
             } else {
                 responseStatus = Status.NO_CONTENT;
             }
@@ -57,12 +58,14 @@ public class FavoritesIml {
             errorMessage = e.getLocalizedMessage();
         }
 
-        return Response.ok(new ApiResponse(responseStatus.name(), errorMessage)).status(responseStatus).build();
+        return Response.ok(new ApiResponse(responseStatus.name(), errorMessage)).status(responseStatus)
+                .header("Access-Control-Allow-Origin", "*").build();
     }
 
     /**
-     * Nacte z DB Oblibene plemeno podle ID, prevede na REST a vrati jako REST Response
-     *  
+     * Nacte z DB Oblibene plemeno podle ID, prevede na REST a vrati jako REST
+     * Response
+     * 
      * @param securityContext
      * 
      * @return Response REST Response
@@ -79,7 +82,7 @@ public class FavoritesIml {
             favorite = facade.getFavorite(favoriteId);
             restFavorite = new FavoriteRestEntity(favorite);
             if (null != restFavorite && !restFavorite.getId().equals("")) {
-                return Response.status(responseStatus).encoding("UTF-8").header("Content-type", "application/json")
+                return Response.status(responseStatus).encoding("UTF-8").header("Access-Control-Allow-Origin", "*")
                         .entity(restFavorite).build();
             } else {
                 responseStatus = Status.NO_CONTENT;
@@ -94,12 +97,13 @@ public class FavoritesIml {
             errorMessage = e.getLocalizedMessage();
         }
 
-        return Response.ok(new ApiResponse(responseStatus.name(), errorMessage)).status(responseStatus).build();
+        return Response.ok(new ApiResponse(responseStatus.name(), errorMessage)).status(responseStatus)
+                .header("Access-Control-Allow-Origin", "*").build();
     }
 
     /**
      * Prida do DB Oblibene plemeno
-     *  
+     * 
      * @param securityContext
      * 
      * @return Response Status.OK, nebo Status.INTERNAL_SERVER_ERROR
@@ -109,12 +113,12 @@ public class FavoritesIml {
         FavoriteEntity favorite = new FavoriteEntity(restFavorite);
         Status responseStatus = Status.OK;
         String errorMessage = "";
-        
+
         FavoritesFacade facade = new FavoritesFacade();
         try {
             facade.addFavorite(favorite);
             return Response.status(responseStatus).encoding("UTF-8").header("Content-type", "application/json")
-                    .entity(new FavoriteRestEntity(favorite)).build();
+                    .header("Access-Control-Allow-Origin", "*").entity(new FavoriteRestEntity(favorite)).build();
         } catch (SQLException e) {
             System.err.println(e.getLocalizedMessage());
             responseStatus = Status.INTERNAL_SERVER_ERROR;
@@ -124,25 +128,27 @@ public class FavoritesIml {
             responseStatus = Status.INTERNAL_SERVER_ERROR;
             errorMessage = e.getLocalizedMessage();
         }
-        return Response.ok(new ApiResponse(responseStatus.name(), errorMessage)).status(responseStatus).build();
+        return Response.ok(new ApiResponse(responseStatus.name(), errorMessage)).status(responseStatus)
+                .header("Access-Control-Allow-Origin", "*").build();
     }
 
     /**
      * Smaze z DB Oblibene plemeno
-     *  
+     * 
      * @param securityContext
      * 
      * @return Response Status.OK, nebo Status.INTERNAL_SERVER_ERROR
      */
-     public Response removeFavorite(String favoriteId, SecurityContext securityContext) {
+    public Response removeFavorite(String favoriteId, SecurityContext securityContext) {
         System.out.println("removeFavorite, " + favoriteId);
         Status responseStatus = Status.OK;
         String errorMessage = "";
-        
+
         FavoritesFacade facade = new FavoritesFacade();
         try {
             facade.deleteFavorite(favoriteId);
-            return Response.ok(new ApiResponse(responseStatus.name(), errorMessage)).status(responseStatus).build();
+            return Response.ok(new ApiResponse(responseStatus.name(), errorMessage)).status(responseStatus)
+                    .header("Content-type", "application/json").header("Access-Control-Allow-Origin", "*").build();
         } catch (SQLException e) {
             System.err.println(e.getLocalizedMessage());
             responseStatus = Status.INTERNAL_SERVER_ERROR;
@@ -152,6 +158,25 @@ public class FavoritesIml {
             responseStatus = Status.INTERNAL_SERVER_ERROR;
             errorMessage = e.getLocalizedMessage();
         }
-        return Response.ok(new ApiResponse(responseStatus.name(), errorMessage)).status(responseStatus).build();
+        return Response.ok(new ApiResponse(responseStatus.name(), errorMessage)).status(responseStatus)
+                .header("Access-Control-Allow-Origin", "*").build();
+    }
+
+    /**
+     * CORS hack na localhost
+     * 
+     * @param securityContext
+     * 
+     * @return Response Access-Control-Allow*
+     */
+    public Response sendOption(SecurityContext securityContext) {
+        System.out.println("sendOption");
+
+        return Response.status(Status.OK).encoding("UTF-8")
+//                .header("Access-Control-Allow-Origin", "http://localhost:8080")
+                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS")
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Headers", "Content-type")
+                .build();
     }
 }
