@@ -49,13 +49,13 @@ public class FavoritesIml {
                 responseStatus = Status.NO_CONTENT;
             }
         } catch (SQLException e) {
-            System.err.println(e.getLocalizedMessage());
+            System.err.println(e.getMessage());
             responseStatus = Status.INTERNAL_SERVER_ERROR;
-            errorMessage = e.getLocalizedMessage();
+            errorMessage = e.getMessage();
         } catch (Exception e) {
-            System.err.println(e.getLocalizedMessage());
+            System.err.println(e.getMessage());
             responseStatus = Status.INTERNAL_SERVER_ERROR;
-            errorMessage = e.getLocalizedMessage();
+            errorMessage = e.getMessage();
         }
 
         return Response.ok(new ApiResponse(responseStatus.name(), errorMessage)).status(responseStatus)
@@ -80,21 +80,21 @@ public class FavoritesIml {
         FavoriteEntity favorite = null;
         try {
             favorite = facade.getFavorite(favoriteId);
-            restFavorite = new FavoriteRestEntity(favorite);
-            if (null != restFavorite && !restFavorite.getId().equals("")) {
+            if (null != favorite && !favorite.getFavoriteId().equals("")) {
+            	restFavorite = new FavoriteRestEntity(favorite);
                 return Response.status(responseStatus).encoding("UTF-8").header("Access-Control-Allow-Origin", "*")
                         .entity(restFavorite).build();
             } else {
                 responseStatus = Status.NO_CONTENT;
             }
         } catch (SQLException e) {
-            System.err.println(e.getLocalizedMessage());
+            System.err.println(e.getMessage());
             responseStatus = Status.INTERNAL_SERVER_ERROR;
-            errorMessage = e.getLocalizedMessage();
+            errorMessage = e.getMessage();
         } catch (Exception e) {
-            System.err.println(e.getLocalizedMessage());
+            System.err.println(e.getMessage());
             responseStatus = Status.INTERNAL_SERVER_ERROR;
-            errorMessage = e.getLocalizedMessage();
+            errorMessage = e.getMessage();
         }
 
         return Response.ok(new ApiResponse(responseStatus.name(), errorMessage)).status(responseStatus)
@@ -120,13 +120,13 @@ public class FavoritesIml {
             return Response.status(responseStatus).encoding("UTF-8").header("Content-type", "application/json")
                     .header("Access-Control-Allow-Origin", "*").entity(new FavoriteRestEntity(favorite)).build();
         } catch (SQLException e) {
-            System.err.println(e.getLocalizedMessage());
+            System.err.println(e.getMessage());
             responseStatus = Status.INTERNAL_SERVER_ERROR;
-            errorMessage = e.getLocalizedMessage();
+            errorMessage = e.getMessage();
         } catch (Exception e) {
-            System.err.println(e.getLocalizedMessage());
+            System.err.println(e.getMessage());
             responseStatus = Status.INTERNAL_SERVER_ERROR;
-            errorMessage = e.getLocalizedMessage();
+            errorMessage = e.getMessage();
         }
         return Response.ok(new ApiResponse(responseStatus.name(), errorMessage)).status(responseStatus)
                 .header("Access-Control-Allow-Origin", "*").build();
@@ -150,13 +150,13 @@ public class FavoritesIml {
             return Response.ok(new ApiResponse(responseStatus.name(), errorMessage)).status(responseStatus)
                     .header("Content-type", "application/json").header("Access-Control-Allow-Origin", "*").build();
         } catch (SQLException e) {
-            System.err.println(e.getLocalizedMessage());
+            System.err.println(e.getMessage());
             responseStatus = Status.INTERNAL_SERVER_ERROR;
-            errorMessage = e.getLocalizedMessage();
+            errorMessage = e.getMessage();
         } catch (Exception e) {
-            System.err.println(e.getLocalizedMessage());
+            System.err.println(e.getMessage());
             responseStatus = Status.INTERNAL_SERVER_ERROR;
-            errorMessage = e.getLocalizedMessage();
+            errorMessage = e.getMessage();
         }
         return Response.ok(new ApiResponse(responseStatus.name(), errorMessage)).status(responseStatus)
                 .header("Access-Control-Allow-Origin", "*").build();
